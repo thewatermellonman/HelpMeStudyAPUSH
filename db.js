@@ -6,12 +6,14 @@ let dbPromise = null;
 
 function getDB() {
     if (!dbPromise) {
-        dbPromise = IDBCursor.openDB(DB_NAME, DB_VERSION, {
+        dbPromise = idb.openDB(DB_NAME, DB_VERSION, {
             upgrade(db) {
-                if (!db.objectstorenames.contains(STORE_NAME)) {
+                if (!db.objectStoreNames.contains(STORE_NAME)) {
                     const store = db.createObjectStore(STORE_NAME, {
-                        keypath: 'id'
+                        keyPath: 'id'
                     });
+
+                    store.createIndex('by-unit', 'unit');
                 }
             }
         });
@@ -26,7 +28,7 @@ async function addnote(note) {
 
 async function getnotesbyunit(unitnumber) {
     const db = await getDB();
-    return db.getallfromindex(STORE_NAME, 'by-unit', Number(unitnumber));
+    return db.getAllFromIndex(STORE_NAME, 'by-unit', Number(unitnumber));
 }
 
 async function updatenote(note) {
@@ -41,5 +43,5 @@ async function deletenote(id) {
 
 async function getallnotes() {
     const db = await getDB();
-    return db.getall(STORE_NAME);
+    return db.getAll(STORE_NAME);
 }

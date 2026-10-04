@@ -9,13 +9,15 @@ const backbutton = document.querySelector("#backbutton")
 const noteslist = document.querySelector("#noteslist");
 const uploadbutton = document.querySelector("#uploadbutton");
 
+let currentunit = null;
+
 unitcards.forEach(card => {
     card.addEventListener("click", async () => {
-        currentunit = number(card.dataset.unit);
+        currentunit = Number(card.dataset.unit);
 
         homeview.hidden = true;
         unitview.hidden = false;
-        unittitle.textContent = `Unit ${unitnumber}`;
+        unittitle.textContent = `Unit ${currentunit}`;
 
         await rendernotes();
     });
@@ -55,21 +57,21 @@ async function rendernotes() {
 
     notes.forEach(note => {
         const card = document.createElement("div");
-        card.classname = "note-card";
+        card.className = "note-card";
         card.dataset.id = note.id;
 
         card.innerHTML = `
-            <input class"note-title" value="${escapeHtml(note.title)}" />
-            <textarea class="note-conent" rows="6">${escapeHtml(note.content)}</textarea>
+            <input class="note-title" value="${escapeHtml(note.title)}" />
+            <textarea class="note-content" rows="6">${escapeHtml(note.content)}</textarea>
             <div class="note-actions">
                 <button class="save-btn">Save</button>
-                <button cass="delete-btn">Delete</button>
+                <button class="delete-btn">Delete</button>
             </div>
         `;
 
         card.querySelector(".save-btn").addEventListener("click", async () => {
-            note.title = card.querySelector(".note-title").ariaValueMax;
-            note.content = card.querySelector(".note-content").ariaValueMax;
+            note.title = card.querySelector(".note-title").value;
+            note.content = card.querySelector(".note-content").value;
             note.updated = Date.now();
             await updatenote(note);
         });
