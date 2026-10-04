@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APUSH Notes Helper</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main id="homeview">
+
+        <h1>APUSH Notes Helper</h1>
+
+        <div class="unit-grid">
+            <button class="unit-card" data-unit="1">
+                <h3>Unit 1</h3>
+                <p>1491-1607: Contact before 1607</p>
+            </button>
+
+            <button class="unit-card" data-unit="2">
+                <h3>Unit 2</h3>
+                <p>1607-1754: Colonization of North America</p>
+            </button>
+
+            <button class="unit-card" data-unit="3">
+                <h3>Unit 3</h3>
+                <p>1754-1800: Nationalism and Liberty</p>
+            </button>
+
+            <button class="unit-card" data-unit="4">
+                <h3>Unit 4</h3>
+                <p>1800-1848: Expansion and Reform</p>
+            </button>
+
+            <button class="unit-card" data-unit="5">
+                <h3>Unit 5</h3>
+                <p>1844-1877: Civil War and Reconstruction</p>
+            </button>
+
+            <button class="unit-card" data-unit="6">
+                <h3>Unit 6</h3>
+                <p>1865-1898: Industrial Capitalism</p>
+            </button>
+
+            <button class="unit-card" data-unit="7">
+                <h3>Unit 7</h3>
+                <p>1898-1945: Crisis and World Power</p>
+            </button>
+
+            <button class="unit-card" data-unit="8">
+                <h3>Unit 8</h3>
+                <p>1945-1980: Post-War</p>
+            </button>
+
+            <button class="unit-card" data-unit="9">
+                <h3>Unit 9</h3>
+                <p>1980-Present: Modern United States</p>
+            </button>
+        </div>
+    </main>
+
+    <main id="unitview" hidden>
+        <button id="backbutton">Back to Units</button>
+
+        <h1 id="unittitle"></h1>
+
+        <section id="noteslist">
+
+        </section>
+
+        <button id="uploadbutton">
+            + Upload Notes
+        </button>
+    </main>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
