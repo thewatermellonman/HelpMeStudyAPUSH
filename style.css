@@ -59,3 +59,51 @@ button {
     background: #e8a9c5;
     cursor: pointer;
 }
+
+.note-card {
+    background:white;
+    border: 2px solid #e8a9c5;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.note-title {
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-bottom: 1px solid #e8a9c5;
+    margin-bottom: 8px;
+    padding: 4px 0;
+    background: transparent;
+}
+
+.note-content {
+    width: 100%;
+    border: 1px solid #f0d0e0;
+    border-radius: 8px;
+    padding: 8px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.note-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.note-actions button {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #e8a9c5;
+}
+
+.empty {
+    text-align: center;
+    color: #9a7a88;
+    margin: 40px 0;
+}
