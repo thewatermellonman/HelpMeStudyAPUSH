@@ -1,5 +1,5 @@
 const DB_NAME = 'apush-notes';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 const STORE_NAME = 'notes';
 
 let dbPromise = null;
@@ -7,17 +7,27 @@ let dbPromise = null;
 function getDB() {
     if (!dbPromise) {
         dbPromise = idb.openDB(DB_NAME, DB_VERSION, {
-            upgrade(db) {
-                if (!db.objectStoreNames.contains(STORE_NAME)) {
-                    const store = db.createObjectStore(STORE_NAME, {
+            upgrade(db, oldVersion, newVersion, transaction) {
+                let store;
+
+                if(db.objectStoreNames.contains(STORE_NAME)) {
+                    store = transaction.objectStore(STORE_NAME);
+                } else {
+                    store = db.createObjectStore(STORE_NAME, {
                         keyPath: 'id'
                     });
+                }
 
+                if (!store.indexNames.contains('by-unit')) {
                     store.createIndex('by-unit', 'unit');
                 }
             }
+        }).catch(error => {
+            dbPromise = null;
+            throw error;
         });
     }
+
     return dbPromise;
 }
 
