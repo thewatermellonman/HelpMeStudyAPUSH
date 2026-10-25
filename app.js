@@ -1,37 +1,37 @@
-const unitcards = document.querySelectorAll(".unit-card");
+const unitCards = document.querySelectorAll(".unit-card");
 
-const homeview = document.querySelector("#homeview");
-const unitview = document.querySelector("#unitview")
+const homeView = document.querySelector("#homeview");
+const unitView = document.querySelector("#unitview");
 
-const unittitle = document.querySelector("#unittitle");
-const backbutton = document.querySelector("#backbutton")
+const unitTitle = document.querySelector("#unittitle");
+const backButton = document.querySelector("#backbutton");
 
-const noteslist = document.querySelector("#noteslist");
-const uploadbutton = document.querySelector("#uploadbutton");
+const notesList = document.querySelector("#noteslist");
+const uploadButton = document.querySelector("#uploadbutton");
 
 let currentunit = null;
 
-unitcards.forEach(card => {
+unitCards.forEach(card => {
     card.addEventListener("click", async () => {
         currentunit = Number(card.dataset.unit);
 
-        homeview.hidden = true;
-        unitview.hidden = false;
-        unittitle.textContent = `Unit ${currentunit}`;
+        homeView.hidden = true;
+        unitView.hidden = false;
+        unitTitle.textContent = `Unit ${currentunit}`;
 
-        await rendernotes();
+        await renderNotes();
     });
 
 });
 
-backbutton.addEventListener("click", () => {
-    unitview.hidden = true;
-    homeview.hidden = false;
-    noteslist.innerHTML = "";
+backButton.addEventListener("click", () => {
+    unitView.hidden = true;
+    homeView.hidden = false;
+    notesList.innerHTML = "";
 });
 
-uploadbutton.addEventListener("click", async () => {
-    const newnote = {
+uploadButton.addEventListener("click", async () => {
+    const newNote = {
         id: crypto.randomUUID(),
         unit: currentunit,
         title: "New Note",
@@ -39,17 +39,17 @@ uploadbutton.addEventListener("click", async () => {
         created: Date.now(),
         updated: Date.now()
     };
-    await addnote(newnote);
-    await rendernotes();
+    await addnote(newNote);
+    await renderNotes();
 });
 
-async function rendernotes() {
-    noteslist.innerHTML = "";
+async function renderNotes() {
+    notesList.innerHTML = "";
 
     const notes = await getnotesbyunit(currentunit);
 
     if (notes.length === 0) {
-        noteslist.innerHTML = `<p class="empty">No notes yet - click "+ Upload Notes" to create one.</p>`;
+        notesList.innerHTML = `<p class="empty">No notes yet - click "+ Upload Notes" to create one.</p>`;
         return;
     }
 
@@ -61,11 +61,11 @@ async function rendernotes() {
         card.dataset.id = note.id;
 
         card.innerHTML = `
-            <input class="note-title" value="${escapeHtml(note.title)}" />
-            <textarea class="note-content" rows="6">${escapeHtml(note.content)}</textarea>
+            <input class="note-title" value="${escapeHtml(note.title)}" placeholder="Note title">
+            <textarea class="note-content" rows="4" placeholder="Write your notes here...">${escapeHtml(note.content)}</textarea>
             <div class="note-actions">
-                <button class="save-btn">Save</button>
-                <button class="delete-btn">Delete</button>
+                <button type="button" class="save-btn">Save</button>
+                <button type="button" class="delete-btn">Delete</button>
             </div>
         `;
 
@@ -79,11 +79,11 @@ async function rendernotes() {
         card.querySelector(".delete-btn").addEventListener("click", async () => {
             if (confirm("Delete this note?")) {
                 await deletenote(note.id);
-                await rendernotes();
+                await renderNotes();
             }
         });
 
-        noteslist.appendChild(card);
+        notesList.appendChild(card);
     });
 }
 
